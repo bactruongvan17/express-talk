@@ -2,13 +2,28 @@
   "name": "express-talk-backend",
   "version": "1.0.0",
   "description": "A chat real-time app use ExpressJs",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "./node_modules/.bin/nodemon main.js",
+    "lint:check": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint --fix",
+    "format": "./node_modules/.bin/prettier --write ."
   },
   "author": "Bac Truong Van <bactruongvan17@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
-  }
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.0.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5"
+  },
+  "type": "module"
 }

@@ -16,6 +16,15 @@ services:
       - .env
     ports:
       - ${API_PORT}:3000
+    environment:
+      - DB_ENGINE=mongo
+      - DB_HOST=${MONGO_HOST}
+      - DB_PORT=${MONGO_PORT}
+      - DB_USER=${MONGO_USER}
+      - DB_PASS=${MONGO_PASS}
+      - DB_NAME=${MONGO_DB}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASS}
     depends_on:
       - mongodb
     networks:
@@ -36,15 +45,6 @@ services:
       - target: ${MONGO_PORT}
         published: ${MONGO_EXPOSE_PORT}
         protocol: tcp
-    environment:
-      - DB_ENGINE=mongo
-      - DB_HOST=${MONGO_HOST}
-      - DB_PORT=${MONGO_PORT}
-      - DB_USER=${MONGO_USER}
-      - DB_PASS=${MONGO_PASS}
-      - DB_NAME=${MONGO_DB}
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASS}
     networks:
       - express-talk
 
