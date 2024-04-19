@@ -1,0 +1,51 @@
+version: '3.1'
+
+networks:
+  express-talk:
+    driver: bridge
+
+services:
+  backend:
+    image: node:latest
+    container_name: express-talk-app
+    tty: true
+    volumes:
+      - ./src/backend:/app
+    working_dir: /app
+    env_file:
+      - .env
+    ports:
+      - ${API_PORT}:3000
+    depends_on:
+      - mongodb
+    networks:
+      - express-talk
+
+  mongodb:
+    image: mongo:latest
+    container_name: express-talk-mongo
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - .env
+    volumes:
+      - ./docker/mongo/entrypoint:/docker-entrypoint-initdb.d
+      - ./docker/mongo/data:/data/db
+      - ./docker/mongo/config:/data/configdb
+    ports:
+      - target: ${MONGO_PORT}
+        published: ${MONGO_EXPOSE_PORT}
+        protocol: tcp
+    environment:
+      - DB_ENGINE=mongo
+      - DB_HOST=${MONGO_HOST}
+      - DB_PORT=${MONGO_PORT}
+      - DB_USER=${MONGO_USER}
+      - DB_PASS=${MONGO_PASS}
+      - DB_NAME=${MONGO_DB}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASS}
+    networks:
+      - express-talk
+
+    
