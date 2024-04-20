@@ -1,10 +1,11 @@
-import User from "../models/user.model.js";
+import { Request, Response } from "express";
+import User from "../models/user.model";
 import {
   checkUsernameExist,
   createUser,
   logIn as processLogin,
   getUserInfo as processGetUserInfo,
-} from "./../services/user.service.js";
+} from "./../services/user.service";
 
 /**
  * Register new account
@@ -12,7 +13,7 @@ import {
  * @param {*} res
  * @returns
  */
-export const register = async (req, res) => {
+export const register = async (req: Request, res: Response) => {
   const { username, password, full_name } = req.body;
 
   try {
@@ -32,7 +33,7 @@ export const register = async (req, res) => {
       message: "success",
       user,
     });
-  } catch (e) {
+  } catch (e: any) {
     return res.status(e.code || 500).json({
       message: e.message,
     });
@@ -45,7 +46,7 @@ export const register = async (req, res) => {
  * @param {*} res
  * @returns
  */
-export const logIn = async (req, res) => {
+export const logIn = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   try {
@@ -55,7 +56,7 @@ export const logIn = async (req, res) => {
       message: "success",
       token,
     });
-  } catch (e) {
+  } catch (e: any) {
     return res.status(e.code || 500).json({
       message: e.message,
     });
@@ -68,7 +69,7 @@ export const logIn = async (req, res) => {
  * @param {*} res
  * @returns
  */
-export const getUserInfo = async (req, res) => {
+export const getUserInfo = async (req: Request, res: Response) => {
   const userId = req.userId;
 
   try {
@@ -83,7 +84,7 @@ export const getUserInfo = async (req, res) => {
         created_at: user.createdAt,
       },
     });
-  } catch (e) {
+  } catch (e: any) {
     return res.status(e.code || 500).json({
       message: e.message,
     });

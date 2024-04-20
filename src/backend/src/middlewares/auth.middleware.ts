@@ -1,7 +1,8 @@
-import { Verify } from "../utils/jwt.util.js";
+import { Request, Response } from "express";
+import { Verify } from "../utils/jwt.util";
 
 export default () => {
-  return (req, res, next) => {
+  return (req: Request, res: Response, next: Function) => {
     let token = req.headers?.["authorization"]?.toString();
     if (!token) {
       return res.status(401).json({ message: "UnAuthorized" });

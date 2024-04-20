@@ -1,17 +1,25 @@
-import dbConnection from "./src/db/mongo.db.js";
-import express from "express";
-import userRouter from "./src/routes/user.route.js";
-import authRouter from "./src/routes/auth.router.js";
+import dbConnection from "./src/db/mongo.db";
+import express, { Express, Request, Response } from "express";
+import userRouter from "./src/routes/user.route";
+import authRouter from "./src/routes/auth.router";
 import bodyParser from "body-parser";
-import authMiddleware from "./src/middlewares/auth.middleware.js";
+import authMiddleware from "./src/middlewares/auth.middleware";
 
-const app = express();
-const port = process.env.port || 3000;
+declare global {
+  namespace Express {
+    interface Request {
+      userId: string;
+    }
+  }
+}
+
+const app: Express = express();
+const port: number = Number(process.env.port) || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/ping", (req, res) => {
+app.get("/ping", (req: Request, res: Response) => {
   res.send("Hello World");
 });
 
@@ -24,7 +32,7 @@ app.listen(port, async () => {
     .then(() =>
       console.log("Database connection had been initlized successful."),
     )
-    .catch((err) => {
+    .catch((err: any) => {
       console.log("Inilize database connection failed. Exit...");
       console.error(err);
       process.exit(500);

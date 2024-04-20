@@ -4,7 +4,7 @@
   "description": "A chat real-time app use ExpressJs",
   "main": "main.js",
   "scripts": {
-    "dev": "./node_modules/.bin/nodemon main.js",
+    "dev": "./node_modules/.bin/nodemon main.ts",
     "lint:check": "./node_modules/.bin/eslint .",
     "lint:fix": "./node_modules/.bin/eslint --fix",
     "format": "./node_modules/.bin/prettier --write ."
@@ -20,11 +20,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.7",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.0.0",
     "nodemon": "^3.1.0",
-    "prettier": "^3.2.5"
-  },
-  "type": "module"
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
 }

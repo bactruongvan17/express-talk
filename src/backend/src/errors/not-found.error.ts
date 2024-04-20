@@ -1,5 +1,6 @@
 export default class NotFoundError extends Error {
-  constructor(message, code = 404) {
+  code: number;
+  constructor(message: string, code: number = 404) {
     super(message);
     this.code = code;
   }
