@@ -1,7 +1,6 @@
 export default class UnAuthorizedError extends Error {
-  code: number;
-  constructor(message: string, code: number = 401) {
+  code: number = 401;
+  constructor(message: string) {
     super(message);
-    this.code = code;
   }
 }

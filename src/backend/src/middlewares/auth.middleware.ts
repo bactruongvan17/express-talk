@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { Verify } from "../utils/jwt.util";
+import { getTokenService } from "../auth/infrastructure/dependencies";
 
 export default () => {
-  return (req: Request, res: Response, next: Function) => {
+  return async (req: Request, res: Response, next: Function) => {
     let token = req.headers?.["authorization"]?.toString();
     if (!token) {
       return res.status(401).json({ message: "UnAuthorized" });
@@ -11,7 +11,7 @@ export default () => {
     token = token.replace("Bearer", "").trim();
 
     try {
-      const { userId } = Verify(token);
+      const { userId } = await getTokenService().Verify(token);
       if (!userId) {
         return res.status(401).json({ message: "UnAuthorized" });
       }
