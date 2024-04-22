@@ -1,5 +1,6 @@
 import UserItem from "../../common/UserItem";
 import Conversation from "./part/Conversation";
+import InputMessageContainer from "../../common/input-message/InputMessageContainer";
 
 export default function ChatCenterBoxContainer() {
     return (
@@ -14,6 +15,8 @@ export default function ChatCenterBoxContainer() {
             }} />
 
             <Conversation />
+
+            <InputMessageContainer />
         </div>
     );
 }
