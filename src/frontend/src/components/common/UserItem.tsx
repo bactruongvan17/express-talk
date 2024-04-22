@@ -1,4 +1,4 @@
-import AvatarSample from "../../assets/images/avatar-sample.jpg";
+import AvatarSample from "../../assets/images/avatar-sample.svg";
 
 export default function UserItem() {
     return (
@@ -8,7 +8,9 @@ export default function UserItem() {
                 alignItems: "center",
                 gap: "10px",
             }}>
-            <img className="avatar" alt="User" src={AvatarSample} />
+                <div className="avatar">
+                    <img alt="User" src={AvatarSample} />
+                </div>
             <div className="info">
                 <span className="name">David Peters</span>
                 <span className="text">Hi, are you available tomorrow?</span>

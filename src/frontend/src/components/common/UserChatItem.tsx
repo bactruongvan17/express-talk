@@ -1,14 +1,16 @@
-import AvatarSample from "../../assets/images/avatar-sample.jpg";
+import AvatarSample from "../../assets/images/avatar-sample.svg";
 
 export default function UserChatItem() {
     return (
-        <div className="user-item">
+        <div className="user-item user-chat-item">
             <div style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
             }}>
-                <img className="avatar" alt="User" src={AvatarSample} />
+                <div className="avatar">
+                    <img alt="User" src={AvatarSample} />
+                </div>
                 <div className="info">
                     <span className="name">David Peters</span>
                     <span className="text">Hi, are you available tomorrow?</span>
@@ -16,7 +18,7 @@ export default function UserChatItem() {
             </div>
             <div className="chat-info">
                 <span className="last-time">10:35 AM</span>
-                <span className="new-message">3<sup>+</sup></span>
+                <span className="new-message">99</span>
             </div>
         </div>
     );
