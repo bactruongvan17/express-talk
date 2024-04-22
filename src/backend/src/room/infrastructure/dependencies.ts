@@ -4,6 +4,8 @@ import { MongoRoomRepository } from "./repository/mongo-room.repository";
 import { RoomController } from "./http/room.controller";
 import { GetListRoomHander } from "../application/get-list-room.handler";
 import { CreateRoomHandler } from "../application/create-room.handler";
+import { UpdateRoomHandler } from "../application/update-room.handler";
+import { DeleteRoomHandler } from "../application/delete-room.handler";
 
 const getRoomRepository = (): RoomRepository => {
   return new MongoRoomRepository();
@@ -11,7 +13,11 @@ const getRoomRepository = (): RoomRepository => {
 
 const commandBus = new CommandBus();
 
-export const getListRoomHandler = new GetListRoomHander(getRoomRepository());
-export const createRoomHandler = new CreateRoomHandler(getRoomRepository());
+const roomRepository: RoomRepository = getRoomRepository();
 
-export const roomController = new RoomController(commandBus);
+export const getListRoomHandler = new GetListRoomHander(roomRepository);
+export const createRoomHandler = new CreateRoomHandler(roomRepository);
+export const updateRoomHandler = new UpdateRoomHandler(roomRepository);
+export const deleteRoomHandler = new DeleteRoomHandler(roomRepository);
+
+export const roomController = new RoomController(commandBus, roomRepository);

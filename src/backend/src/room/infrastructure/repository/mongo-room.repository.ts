@@ -23,7 +23,13 @@ export class MongoRoomRepository implements RoomRepository {
       .skip(filter.limit * (filter.page - 1))
       .toArray();
 
-    return query;
+    return query.map((item: any) => {
+      return {
+        id: item._id,
+        name: item.name,
+        member_ids: item.member_ids,
+      }
+    });
   }
 
   /**
@@ -36,7 +42,7 @@ export class MongoRoomRepository implements RoomRepository {
       .collection("rooms")
       .findOne({
         _id: new ObjectId(id),
-        owner_id: owner.id,
+        owner_id: new ObjectId(owner.id),
       });
 
     if (!query) {
@@ -62,8 +68,8 @@ export class MongoRoomRepository implements RoomRepository {
       .collection("rooms")
       .insertOne({
         name: room.name,
-        ower_id: room.owner.id,
-        member_ids: room.members.map((m: Member) => m.id),
+        owner_id: new ObjectId(room.owner.id),
+        member_ids: room.members.map((m: Member) => new ObjectId(m.id)),
       });
 
     room.id = roomDb.insertedId.toString();
@@ -85,7 +91,7 @@ export class MongoRoomRepository implements RoomRepository {
         {
           $set: {
             name: room.name,
-            member_ids: room.members.map((m: Member) => m.id),
+            member_ids: room.members.map((m: Member) => new ObjectId(m.id)),
           },
         },
       );
@@ -108,10 +114,10 @@ export class MongoRoomRepository implements RoomRepository {
    */
   async checkNameExists(name: string, owner: Owner): Promise<boolean> {
     const doc = await Connection.getDb().collection("rooms").findOne({
-      owner_id: owner.id,
+      owner_id: new ObjectId(owner.id),
       name,
     });
 
-    return !doc;
+    return doc !== null;
   }
 }

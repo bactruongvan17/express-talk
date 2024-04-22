@@ -6,13 +6,13 @@ import { Owner } from "../domain/entity/owner.entity";
 import { Member } from "../domain/entity/member.entity";
 
 export class CreateRoomHandler implements Handler {
-  constructor(private readonly roomRepository: RoomRepository) {}
+  constructor(private readonly _roomRepository: RoomRepository) {}
 
   async handle(command: CreateRoomCommand): Promise<Room> {
     const owner = new Owner(command.ownerId);
 
     // check room name exists
-    const isNameExists = await this.roomRepository.checkNameExists(
+    const isNameExists = await this._roomRepository.checkNameExists(
       command.name,
       owner,
     );
@@ -26,6 +26,6 @@ export class CreateRoomHandler implements Handler {
       command.memberIds.map((m: string) => new Member(m)),
     );
 
-    return this.roomRepository.create(room);
+    return this._roomRepository.create(room);
   }
 }
