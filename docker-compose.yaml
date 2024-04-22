@@ -29,6 +29,18 @@ services:
       - mongodb
     networks:
       - express-talk
+  
+  ui:
+    image: node:latest
+    container_name: express-talk-ui
+    tty: true
+    volumes:
+      - ./src/frontend:/app
+    working_dir: /app
+    ports:
+      - ${WEB_PORT}:3000
+    networks:
+      - express-talk
 
   mongodb:
     image: mongo:latest
