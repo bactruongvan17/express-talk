@@ -6,6 +6,8 @@ import authMiddleware from "./src/middlewares/auth.middleware";
 import { Connection as MongoConnection } from "./src/db/mongo-connection.db";
 import roomRouter from "./src/room/infrastructure/http/room.router";
 import authRouter from "./src/auth/infrastructure/http/auth.router";
+import { openSocket } from "./src/socket/index";
+import Cors from "cors";
 
 declare global {
   namespace Express {
@@ -18,10 +20,14 @@ declare global {
 const app: Express = express();
 const port: number = Number(process.env.port) || 3000;
 
+app.use(Cors({
+  origin: 'http://localhost:3000'
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/ping", (req: Request, res: Response) => {
+app.get("/ping", (res: Response) => {
   res.send("Hello World");
 });
 
@@ -41,4 +47,10 @@ app.listen(port, async () => {
     });
 
   console.log(`ExpressTalk API is running on 0.0.0.0:${port}`);
+});
+
+// open socket
+const io = openSocket(app);
+io.on("connection", (socket: any) => {
+  console.log("Socket.io is running at ::3002");
 });

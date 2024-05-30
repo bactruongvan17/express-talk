@@ -1,5 +1,3 @@
-version: '3.1'
-
 networks:
   express-talk:
     driver: bridge
@@ -16,6 +14,7 @@ services:
       - .env
     ports:
       - ${API_PORT}:3000
+      - ${SOCKET_PORT}:3001
     environment:
       - DB_ENGINE=mongo
       - DB_HOST=${MONGO_HOST}
@@ -37,6 +36,8 @@ services:
     volumes:
       - ./src/frontend:/app
     working_dir: /app
+    environment:
+      - API_URL=http://localhost:${API_PORT}
     ports:
       - ${WEB_PORT}:3000
     networks:
